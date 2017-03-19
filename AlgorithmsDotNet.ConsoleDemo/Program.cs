@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace AlgorithmsDotNet.ConsoleDemo
 {
@@ -6,34 +7,40 @@ namespace AlgorithmsDotNet.ConsoleDemo
     {
         static void Main(string[] args)
         {
-            var runInsertionSortOnIntegerArrayResult = RunInsertionSortOnIntegerArray();
+            int[] unsortedIntegerArray = { 29, 27, 20, 28, 24, 26, 9, 7, 10, 8, 4, 6, 21, 22, 25, 23, 1, 2, 5, 3 };
+            string[] unsortedStringArray = { "halt", "plane", "train", "analyzed", "HAL", "oddesey", "brakes", "mobile", "analyzing", "halted", "be rigth back", "123 Street" };
 
-            foreach (var i in runInsertionSortOnIntegerArrayResult.Item1)
-            {
-                Console.WriteLine(i.ToString());
-            }
+            // Insertion sort on integer array
+            var runInsertionSortOnIntegerArrayResult = RunInsertionSortOnIntegerArray(unsortedIntegerArray.ToArray());
+
+            runInsertionSortOnIntegerArrayResult.Item1.ToList().ForEach(Console.WriteLine);
 
             Console.WriteLine(runInsertionSortOnIntegerArrayResult.Item2);
 
             Console.WriteLine(string.Empty);
 
-            var runInsertSortOnStringArrayResult = RunInsertionSortOnStringArray();
+            // Insertion sort on string array
+            var runInsertSortOnStringArrayResult = RunInsertionSortOnStringArray(unsortedStringArray.ToArray());
 
-            foreach (string s in runInsertSortOnStringArrayResult.Item1)
-            {
-                Console.WriteLine(s);
-            }
+            runInsertSortOnStringArrayResult.Item1.ToList().ForEach(Console.WriteLine);
 
             Console.WriteLine(runInsertSortOnStringArrayResult.Item2);
+
+            Console.WriteLine(string.Empty);
+
+            // Bubble sort on integer array
+            var runBubbleSortOnIntegerArrayResult = RunBubbleSortOnIntegerArray(unsortedIntegerArray.ToArray());
+
+            runBubbleSortOnIntegerArrayResult.Item1.ToList().ForEach(Console.WriteLine);
+
+            Console.WriteLine(runBubbleSortOnIntegerArrayResult.Item2);
         }
 
-        static Tuple<int[], string> RunInsertionSortOnIntegerArray()
+        static Tuple<int[], string> RunInsertionSortOnIntegerArray(int[] unsortedArray)
         {
-            int[] unsortedArray = { 29, 27, 20, 28, 24, 26, 9, 7, 10, 8, 4, 6, 21, 22, 25, 23, 1, 2, 5, 3 };
-
             var startDateTime = DateTime.Now;
 
-            var sortedArray = unsortedArray.InsertionSort((a, b) => (a > b));
+            unsortedArray.InsertionSort((a, b) => (a > b));
 
             var endDateTime = DateTime.Now;
 
@@ -41,16 +48,14 @@ namespace AlgorithmsDotNet.ConsoleDemo
 
             string resultMessage = $"*** Elapsed: {elapsed.Milliseconds.ToString()} ms";
 
-            return Tuple.Create(sortedArray, resultMessage);
+            return Tuple.Create(unsortedArray, resultMessage);
         }
 
-        static Tuple<string[], string> RunInsertionSortOnStringArray()
+        static Tuple<string[], string> RunInsertionSortOnStringArray(string[] unsortedArray)
         {
-            string[] unsortedArray = { "halt", "plane", "train", "analyzed", "HAL", "oddesey", "brakes", "mobile", "analyzing", "halted", "be rigth back", "123 Street" };
-
             var startDateTime = DateTime.Now;
 
-            var sortedArray = unsortedArray.InsertionSort((a, b) => a.CompareTo(b) > 0);
+            unsortedArray.InsertionSort((a, b) => a.CompareTo(b) > 0);
 
             var endDateTime = DateTime.Now;
 
@@ -58,7 +63,22 @@ namespace AlgorithmsDotNet.ConsoleDemo
 
             string resultMessage = $"*** Elapsed: {elapsed.Milliseconds.ToString()} ms";
 
-            return Tuple.Create(sortedArray, resultMessage);
+            return Tuple.Create(unsortedArray, resultMessage);
+        }
+
+        static Tuple<int[], string> RunBubbleSortOnIntegerArray(int[] unsortedArray)
+        {
+            var startDateTime = DateTime.Now;
+
+            unsortedArray.BubbleSort((a, b) => (a > b));
+
+            var endDateTime = DateTime.Now;
+
+            var elapsed = endDateTime - startDateTime;
+
+            string resultMessage = $"*** Elapsed: {elapsed.Milliseconds.ToString()} ms";
+
+            return Tuple.Create(unsortedArray, resultMessage);
         }
     }
 }
