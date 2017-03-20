@@ -55,7 +55,7 @@ namespace AlgorithmsDotNet.ConsoleDemo
         {
             var startDateTime = DateTime.Now;
 
-            unsortedArray.InsertionSort((a, b) => a.CompareTo(b) > 0);
+            unsortedArray.InsertionSort((a, b) => string.Compare(a, b, StringComparison.CurrentCulture) > 0);
 
             var endDateTime = DateTime.Now;
 
